@@ -1,0 +1,1 @@
+<nav class="tabs" aria-label="Administración"><a href="/admin/perros">Perros</a><a href="/admin/necesidades">Necesidades</a><a href="/admin/aportes">Aportes</a><a href="/admin/solicitudes">Solicitudes</a><a href="/cuidados">Cuidados</a></nav>
