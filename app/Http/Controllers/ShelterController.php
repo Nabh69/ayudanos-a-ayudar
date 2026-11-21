@@ -19,8 +19,21 @@ class ShelterController extends Controller
         $dogs = Dog::where('is_published', true)->when($r->filled('size'), fn ($q) => $q->where('size', $r->string('size')))->latest()->paginate(9);
         $cats = Cat::where('is_published', true)->latest()->get();
         $needs = Need::where('status', 'activa')->latest()->get();
+        $lostAnimals = [
+            ['name' => 'Max', 'status' => 'Perdido', 'detail' => 'Husky siberiano, 2 años. Se busca en José Luis Bustamante y Rivero.', 'image' => 'images/community/max-perdido.png'],
+            ['name' => 'Pedrito', 'status' => 'Perdido', 'detail' => 'Llevaba pechera naranja. Si lo ves, reténlo y avisa a su familia.', 'image' => 'images/community/pedrito-perdido.png'],
+            ['name' => 'Sola', 'status' => 'Encontrada', 'detail' => 'Perrita encontrada en la zona de Cerro Colorado. Ayúdanos a ubicar a su familia.', 'image' => 'images/community/sola-encontrada.png'],
+            ['name' => 'Lizzie', 'status' => 'Perdida', 'detail' => 'Pequeña a mediana, esterilizada y dócil. Se perdió por Paucarpata.', 'image' => 'images/community/lizzie-perdida.png'],
+            ['name' => 'Drago', 'status' => 'Perdido', 'detail' => 'Braco alemán negro, grande, con una cicatriz en la pata delantera.', 'image' => 'images/community/drago-perdido.png'],
+        ];
+        $campaigns = [
+            ['title' => 'Adobada solidaria', 'detail' => 'Cada adobada ayuda a cubrir alimento y cuidados veterinarios.', 'image' => 'images/community/adobada.png'],
+            ['title' => 'Pollada solidaria', 'detail' => 'Campaña para recaudar fondos destinados a los albergues.', 'image' => 'images/community/pollada-1.png'],
+            ['title' => 'Gran rifa navideña', 'detail' => 'Participa y apoya una causa que transforma vidas.', 'image' => 'images/community/rifa-navidad.png'],
+            ['title' => 'Adobitos para ayudar', 'detail' => 'Tu compra se convierte en alimento y atención para los animales.', 'image' => 'images/community/adobitos.png'],
+        ];
 
-        return view('home', compact('dogs', 'cats', 'needs'));
+        return view('home', compact('dogs', 'cats', 'needs', 'lostAnimals', 'campaigns'));
     }
 
     public function panel(Request $r)
