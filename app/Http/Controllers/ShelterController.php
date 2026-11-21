@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdoptionRequest;
 use App\Models\CareRecord;
+use App\Models\Cat;
 use App\Models\Dog;
 use App\Models\Donation;
 use App\Models\Need;
@@ -16,9 +17,10 @@ class ShelterController extends Controller
     public function home(Request $r)
     {
         $dogs = Dog::where('is_published', true)->when($r->filled('size'), fn ($q) => $q->where('size', $r->string('size')))->latest()->paginate(9);
+        $cats = Cat::where('is_published', true)->latest()->get();
         $needs = Need::where('status', 'activa')->latest()->get();
 
-        return view('home', compact('dogs', 'needs'));
+        return view('home', compact('dogs', 'cats', 'needs'));
     }
 
     public function panel(Request $r)
