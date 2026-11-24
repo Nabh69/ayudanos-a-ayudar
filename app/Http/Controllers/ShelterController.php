@@ -11,6 +11,7 @@ use App\Models\Need;
 use App\Models\VolunteerApplication;
 use App\Services\ShelterService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ShelterController extends Controller
 {
@@ -32,8 +33,11 @@ class ShelterController extends Controller
             ['title' => 'Gran rifa navideña', 'detail' => 'Participa y apoya una causa que transforma vidas.', 'image' => 'images/community/rifa-navidad.jpg'],
             ['title' => 'Adobitos para ayudar', 'detail' => 'Tu compra se convierte en alimento y atención para los animales.', 'image' => 'images/community/adobitos.jpg'],
         ];
+        $gallery = collect(File::files(public_path('images/gallery')))
+            ->map(fn ($file) => 'images/gallery/'.$file->getFilename())
+            ->values();
 
-        return view('home', compact('dogs', 'cats', 'needs', 'lostAnimals', 'campaigns'));
+        return view('home', compact('dogs', 'cats', 'needs', 'lostAnimals', 'campaigns', 'gallery'));
     }
 
     public function panel(Request $r)
