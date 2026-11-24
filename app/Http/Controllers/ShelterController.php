@@ -19,6 +19,7 @@ class ShelterController extends Controller
     {
         $dogs = Dog::where('is_published', true)->when($r->filled('size'), fn ($q) => $q->where('size', $r->string('size')))->latest()->paginate(9);
         $cats = Cat::where('is_published', true)->latest()->get();
+        $dogPhotos = ['Luna' => 'images/dogs/luna.jpg', 'Bruno' => 'images/dogs/bruno.jpg', 'Mila' => 'images/dogs/mila.jpg', 'Bella' => 'images/dogs/bella.jpg', 'Roky' => 'images/dogs/roky.jpg', 'Rambo' => 'images/dogs/rambo.jpg', 'Hércules' => 'images/dogs/hercules.jpg'];
         $needs = Need::where('status', 'activa')->latest()->get();
         $lostAnimals = [
             ['name' => 'Max', 'status' => 'Perdido', 'detail' => 'Husky siberiano, 2 años. Se busca en José Luis Bustamante y Rivero.', 'image' => 'images/community/max-perdido.jpg'],
@@ -37,7 +38,7 @@ class ShelterController extends Controller
             ->map(fn ($file) => 'images/gallery/'.$file->getFilename())
             ->values();
 
-        return view('home', compact('dogs', 'cats', 'needs', 'lostAnimals', 'campaigns', 'gallery'));
+        return view('home', compact('dogs', 'cats', 'needs', 'lostAnimals', 'campaigns', 'gallery', 'dogPhotos'));
     }
 
     public function panel(Request $r)
